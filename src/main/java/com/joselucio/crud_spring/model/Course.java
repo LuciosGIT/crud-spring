@@ -2,14 +2,13 @@ package com.joselucio.crud_spring.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.joselucio.crud_spring.enums.Category;
+import com.joselucio.crud_spring.enums.Status;
 import com.joselucio.crud_spring.enums.converters.CategoryConverter;
+import com.joselucio.crud_spring.enums.converters.StatusConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.validator.constraints.Length;
@@ -37,9 +36,8 @@ public class Course {
     private Category category;
 
     @NotNull
-    @Length(max = 10)
-    @Pattern(regexp = "Ativo|Inativo")
-    @Column(length = 10, nullable = false)
-    private String status = "Ativo";
+    @Column(length = 10,nullable = false)
+    @Convert(converter = StatusConverter.class)
+    private Status status = Status.ACTIVE;
 
 }
